@@ -10,7 +10,7 @@ This uses Go WebAssembly + BuildKit package.
 :whale: https://po3rin.github.io/dockerdot/ :whale:
 
 <p align="center">
-    <img src="./img/sc.png" width="80%">
+    <img src="./mdsrc/sp.gif" width="80%">
 </p>
 
 ## Go + WebAssembly
