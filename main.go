@@ -9,11 +9,11 @@ import (
 
 func registerCallbacks() {
 	var cb js.Func
-	cb = js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		document := js.Global().Get("document")
-		element := document.Call("getElementById", "textarea")
-		text := element.Get("value").String()
+	document := js.Global().Get("document")
+	element := document.Call("getElementById", "textarea")
 
+	cb = js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		text := element.Get("value").String()
 		dockerfile := []byte(text)
 
 		// https://github.com/golang/go/issues/26382
@@ -23,7 +23,6 @@ func registerCallbacks() {
 			if err != nil {
 				fmt.Println(err)
 			}
-			fmt.Println(string(dot))
 			showGraph := js.Global().Get("showGraph")
 			showGraph.Invoke(string(dot))
 		}()

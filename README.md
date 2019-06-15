@@ -11,7 +11,7 @@ This uses Go WebAssembly + BuildKit package.
 (not support smart phone ...)
 
 <p align="center">
-    <img src="./mdsrc/sp.gif" width="80%">
+    <img src="./static/sp.gif" width="80%">
 </p>
 
 ## Go + WebAssembly
@@ -19,6 +19,9 @@ https://github.com/golang/go/wiki/WebAssembly
 
 ## DOT language
 https://medium.com/@dinis.cruz/dot-language-graph-based-diagrams-c3baf4c0decc
+
+## BuildKit
+https://github.com/moby/buildkit
 
 ## Warn
 
