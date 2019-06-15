@@ -502,6 +502,7 @@ func dispatch(d *dispatchState, cmd command, opt dispatchOpt) error {
 		err = dispatchUser(d, c, true)
 	case *instructions.VolumeCommand:
 		err = dispatchVolume(d, c)
+	// WARN: wabassembly can not use signal package...
 	// case *instructions.StopSignalCommand:
 	// 	err = dispatchStopSignal(d, c)
 	case *instructions.ShellCommand:
@@ -971,6 +972,7 @@ func dispatchVolume(d *dispatchState, c *instructions.VolumeCommand) error {
 	return commitToHistory(&d.image, fmt.Sprintf("VOLUME %v", c.Volumes), false, nil)
 }
 
+// WARN: wabassembly can not use signal package...
 // func dispatchStopSignal(d *dispatchState, c *instructions.StopSignalCommand) error {
 // 	if _, err := signal.ParseSignal(c.Signal); err != nil {
 // 		return err
