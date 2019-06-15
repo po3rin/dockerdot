@@ -19,7 +19,22 @@
 			<a href="https://github.com/po3rin/dockerdot"><img id="repo" src="static/github.png"></a>
 		</header>
 		<div>
-			<textarea id="textarea"></textarea>
+			<textarea id="textarea">
+FROM golang:1.12 AS stage0
+
+WORKDIR /go
+ADD ./ /go
+RUN go build -o stage0_bin
+
+FROM golang:1.12 AS stage1
+WORKDIR /go
+ADD ./ /go
+
+RUN go build -o stage1_bin
+FROM golang:1.12
+COPY --from=stage0 /go/stage0_bin /
+COPY --from=stage1 /go/stage1_bin /
+			</textarea>
 		</div>
 		<button id="button">check !!!</button>
 		<div id="graph"></div>

@@ -31,19 +31,24 @@ h1{
 #textarea {
     width: 50vw;
     height: 30vh;
+    border: 1px gray bold;
 }
 #button{
     margin: 8px;
 }
 @media screen and (max-width:700px) {
-	#textarea {
-        width: 90vw;
-        height: 30vh;
-    }
     svg{
         width: 90vw;
     }
+    header{
+        width: 95vw;
+        padding: 8px;
+    }
     #graph{
         width: 90vw;
+    }
+    #textarea {
+        width: 90vw;
+        height: 30vh;
     }
 }
