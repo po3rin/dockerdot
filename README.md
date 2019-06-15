@@ -1,6 +1,13 @@
 # dockerbot
 
-in development ...
+dockerdot shows dockerfile dependenciy graph. This is useful to understand how build dockerfile.
+This uses Go WebAssembly + BuildKit package.
+
+## Go + WebAssembly
+https://github.com/golang/go/wiki/WebAssembly
+
+## DOT language
+https://medium.com/@dinis.cruz/dot-language-graph-based-diagrams-c3baf4c0decc
 
 ## Warn
 

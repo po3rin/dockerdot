@@ -2,33 +2,38 @@ package main
 
 import (
 	"fmt"
+	"syscall/js"
 
 	"github.com/po3rin/dockerdot/docker2dot"
 )
 
+func registerCallbacks() {
+	var cb js.Func
+	cb = js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		document := js.Global().Get("document")
+		element := document.Call("getElementById", "textarea")
+		text := element.Get("value").String()
+
+		dockerfile := []byte(text)
+
+		// https://github.com/golang/go/issues/26382
+		// should wrap func with gorutine.
+		go func() {
+			dot, err := docker2dot.Docker2Dot(dockerfile)
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(string(dot))
+			showGraph := js.Global().Get("showGraph")
+			showGraph.Invoke(string(dot))
+		}()
+		return nil
+	})
+	js.Global().Get("document").Call("getElementById", "button").Call("addEventListener", "click", cb)
+}
+
 func main() {
-	dockerfile := []byte(`
-	FROM golang:1.12 as builder
-
-	WORKDIR /go/wedding
-
-	COPY . .
-
-	ENV GO111MODULE=on
-	RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo .
-
-
-	FROM alpine:latest
-
-	RUN apk --no-cache add ca-certificates
-
-	WORKDIR /app
-	COPY --from=builder /go/wedding .
-	COPY ./client .
-	`)
-	dot, err := docker2dot.Docker2Dot(dockerfile)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(string(dot))
+	c := make(chan struct{}, 0)
+	registerCallbacks()
+	<-c
 }

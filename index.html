@@ -13,14 +13,26 @@
 		</script>
 	</head>
 	<body>
-		<h1>Dockerfile LLB dependencies checker</h1>
-		<textarea class="textarea"></textarea>
-		<button>check</button>
+		<header>
+			<h1>Dockerfile Dependency graph</h1>
+			<a href="https://github.com/po3rin/dockerdot"><img id="repo" src="static/github.png"></a>
+		</header>
+		<div>
+			<textarea id="textarea"></textarea>
+		</div>
+		<button id="button">check !!!</button>
+		<div id="graph"></div>
 	</body>
 	<script>
 		let viz = new Viz()
-		viz.renderSVGElement('digraph { a -> b; }').then((element)=> {
-			document.body.appendChild(element)
-		})
+		graph = document.getElementById("graph")
+		showGraph = (dot) => {
+			viz.renderSVGElement(dot).then((element)=> {
+				if (graph.lastChild){
+					graph.removeChild(graph.lastChild)
+				}
+				graph.appendChild(element)
+			})
+		}
 	</script>
 </html>

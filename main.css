@@ -1,4 +1,49 @@
-.textarea {
+body{
+    margin: auto;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: #2c3e50;
+}
+svg{
     width: 50vw;
-    height: 50vh;
+}
+#graph{
+    width: 50vw;
+}
+#repo{
+    width: 46px;
+    height: 46px;
+}
+header{
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    width: 50vw;
+}
+h1{
+    font-size: 20px;
+}
+#textarea {
+    width: 50vw;
+    height: 30vh;
+}
+#button{
+    margin: 8px;
+}
+@media screen and (max-width:700px) {
+	#textarea {
+        width: 90vw;
+        height: 30vh;
+    }
+    svg{
+        width: 90vw;
+    }
+    #graph{
+        width: 90vw;
+    }
 }
