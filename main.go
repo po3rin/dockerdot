@@ -30,6 +30,7 @@ func registerCallbacks() {
 		return nil
 	})
 	js.Global().Get("document").Call("getElementById", "button").Call("addEventListener", "click", cb)
+	js.Global().Get("document").Call("getElementById", "button").Call("ontouchstart", "click", cb)
 }
 
 func main() {
