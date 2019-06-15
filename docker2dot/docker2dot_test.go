@@ -7,6 +7,7 @@ import (
 	"github.com/po3rin/dockerdot/docker2dot"
 )
 
+// TODO: ignore hash.
 func TestDocker2Dot(t *testing.T) {
 	tests := []struct {
 		input []byte
