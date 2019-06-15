@@ -8,6 +8,7 @@ dockerdot shows dockerfile dependenciy graph. This is useful to understand how b
 This uses Go WebAssembly + BuildKit package.
 
 :whale: https://po3rin.github.io/dockerdot/ :whale:
+(not support smart phone ...)
 
 <p align="center">
     <img src="./mdsrc/sp.gif" width="80%">
