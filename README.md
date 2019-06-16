@@ -14,6 +14,16 @@ This uses Go WebAssembly + BuildKit package.
     <img src="./static/sp.gif" width="80%">
 </p>
 
+## How to develop
+
+```bash
+## build wasm
+make build
+
+## run file server
+make exec
+```
+
 ## Go + WebAssembly
 https://github.com/golang/go/wiki/WebAssembly
 
