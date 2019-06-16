@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/moby/buildkit/client/llb"
+	"github.com/moby/buildkit/client/llb/imagemetaresolver"
 	"github.com/moby/buildkit/solver/pb"
 	digest "github.com/opencontainers/go-digest"
 	"github.com/pkg/errors"
@@ -16,7 +17,16 @@ import (
 
 // Docker2Dot convert dockerfile to llb Expressed in DOT language.
 func Docker2Dot(df []byte) ([]byte, error) {
-	st, img, err := dockerfile2llb.Dockerfile2LLB(context.Background(), df, dockerfile2llb.ConvertOpt{})
+	caps := pb.Caps.CapSet(pb.Caps.All())
+
+	st, img, err := dockerfile2llb.Dockerfile2LLB(
+		context.Background(),
+		df,
+		dockerfile2llb.ConvertOpt{
+			MetaResolver: imagemetaresolver.Default(),
+			LLBCaps:      &caps,
+		},
+	)
 	if err != nil {
 		return nil, err
 	}
