@@ -103,7 +103,35 @@ func attr(dgst digest.Digest, op pb.Op) (string, string) {
 		return strings.Join(op.Exec.Meta.Args, " "), "box"
 	case *pb.Op_Build:
 		return "build", "box3d"
+	case *pb.Op_File:
+		txt := getCustomString(op.File.Actions)
+		if txt == "" {
+			// if no op.File.Actions, return CompactTextString as message.
+			return op.File.String(), "box"
+		}
+		return txt, "box"
+
 	default:
 		return dgst.String(), "plaintext"
 	}
+}
+
+func getCustomString(actions []*pb.FileAction) string {
+	// set custom messages from fileOp actions
+	// https://github.com/po3rin/dockerdot/issues/3
+	for _, v := range actions {
+		switch action := v.Action.(type) {
+		case *pb.FileAction_Copy:
+			return fmt.Sprintf("copy src='%v' dest='%v'", action.Copy.Src, action.Copy.Dest)
+		case *pb.FileAction_Mkfile:
+			return fmt.Sprintf("mkfile %+v", action.Mkfile.Path)
+		case *pb.FileAction_Mkdir:
+			return fmt.Sprintf("mkdir: %+v\n", action.Mkdir.Path)
+		case *pb.FileAction_Rm:
+			return fmt.Sprintf("rm: %+v\n", action.Rm.Path)
+		default:
+			return ""
+		}
+	}
+	return ""
 }
