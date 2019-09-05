@@ -104,13 +104,25 @@ func attr(dgst digest.Digest, op pb.Op) (string, string) {
 	case *pb.Op_Build:
 		return "build", "box3d"
 	case *pb.Op_File:
-		txt := getCustomString(op.File.Actions)
-		if txt == "" {
-			// if no op.File.Actions, return CompactTextString as message.
-			return op.File.String(), "box"
-		}
-		return txt, "box"
+		names := []string{}
 
+		for _, action := range op.File.Actions {
+			var name string
+
+			switch act := action.Action.(type) {
+			case *pb.FileAction_Copy:
+				name = fmt.Sprintf("copy{src=%s, dest=%s}", act.Copy.Src, act.Copy.Dest)
+			case *pb.FileAction_Mkfile:
+				name = fmt.Sprintf("mkfile{path=%s}", act.Mkfile.Path)
+			case *pb.FileAction_Mkdir:
+				name = fmt.Sprintf("mkdir{path=%s}", act.Mkdir.Path)
+			case *pb.FileAction_Rm:
+				name = fmt.Sprintf("rm{path=%s}", act.Rm.Path)
+			}
+
+			names = append(names, name)
+		}
+		return strings.Join(names, ","), "note"
 	default:
 		return dgst.String(), "plaintext"
 	}
